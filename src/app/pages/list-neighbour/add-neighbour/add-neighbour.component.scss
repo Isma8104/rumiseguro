@@ -1,0 +1,97 @@
+//Images
+
+.custom-dropzone {
+    height       : 80px;
+    width        : auto;
+    // background: #ced4da;
+    background   : #fff;
+    color        : #000;
+    border       : 5px dashed #fff;
+    border-radius: 5px;
+    box-shadow   : 0px 1px 3px 1px #ced4da;
+    font-size    : 20px;
+    padding-top  : 30px;
+}
+
+ngx-dropzone,
+.custom-dropzone {
+    // margin: 20px;
+    margin-top  : 20px;
+    margin-left : auto;
+    margin-right: auto;
+    display     : block;
+}
+
+.custom-dropzone {
+    height       : 200px;
+    width        : auto;
+    // background: #ced4da;
+    background   : #fff;
+    color        : #000;
+    border       : 5px dashed #fff;
+    border-radius: 5px;
+    box-shadow   : 0px 1px 3px 1px #ced4da;
+    font-size    : 20px;
+    padding-top  : 30px;
+}
+
+.custom-dropzone-p {
+    height       : 150px;
+    background   : #fff;
+    color        : #000;
+    border       : 2px dashed #000;
+    border-radius: 5px;
+    box-shadow   : 0px 1px 3px 1px #ced4da;
+    font-size    : 20px;
+}
+
+.custom-dropzone-p.ngx-dz-hovered {
+    border: 5px solid rgb(235, 79, 79);
+}
+
+.custom-dropzone.ngx-dz-hovered {
+    border: 5px solid rgb(0, 0, 0);
+}
+
+#preview {
+    display        : flex;
+    height         : 100px;
+    min-height     : 100px;
+    min-width      : 200px;
+    max-width      : 200px;
+    justify-content: center;
+    text-align     : center;
+    align-items    : center;
+    margin         : 10px;
+    border-radius  : 5px;
+    position       : relative;
+}
+
+.center {
+    margin-left : auto !important;
+    margin-right: auto !important;
+    display     : block;
+}
+
+#btnPrevious {
+    background-color: #43BDD6;  
+    color:white;
+}
+
+#btnNext  {
+    background-color: #43BDD6;  
+    color:white;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-button {
+    order: 1; /* El botón Anterior estará en el extremo izquierdo */
+}
+
+.right-button {
+    order: 2; /* El botón Siguiente estará en el extremo derecho */
+}

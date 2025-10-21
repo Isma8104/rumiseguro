@@ -1,0 +1,95 @@
+<!-- <div class="modal-header1 text-left row mb-1"> -->
+<!--     <h6 class="modal-title">Información alerta</h6> -->
+<!--     <button type="button" class="close mt--5 mr--2" (click)="close()"> -->
+<!--         <i class="fa fa-times icon-modal-close"></i> -->
+<!--     </button> -->
+<!-- </div> -->
+<!--  -->
+<!-- <mat-dialog-content class="mat-typography"> -->
+<!--     <form class="form-horizontal" [formGroup]="form" autocomplete="off"> -->
+<!--         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> -->
+<!--             <div class="row"> -->
+<!--                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" > -->
+<!--                  -->
+<!--                     <strong>Usuario</strong><br> -->
+<!--                     <p> -->
+<!--                         <small>Nombre: <strong>{{ user.name }}</strong></small><br> -->
+<!--                         <small>Cédula: <strong>{{ user.ci }}</strong></small><br> -->
+<!--                         <small>Teléfono: <strong>{{ user.phone }}</strong></small><br> -->
+<!--                         <small>Dirección: <strong>{{ user.address }}</strong></small><br> -->
+<!--                     </p> -->
+<!--                 </div> -->
+<!--                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="height: 55vh;" > -->
+<!--                     <app-map-card [lat]="latE" [lng]="lngE" [heightE]="heightE" #mapCard></app-map-card> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--  -->
+<!--         </div> -->
+<!--          -->
+<!--         <div class="row"> -->
+<!--             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" > -->
+<!--                 <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline" style="border: 2px #000000;"> -->
+<!--                     <mat-label>Motivo de alerta</mat-label> -->
+<!--                     <input matInput name="comment" formControlName="comment"> -->
+<!--                 </mat-form-field> -->
+<!--             </div> -->
+<!--  -->
+<!--         </div> -->
+<!--     </form> -->
+<!-- </mat-dialog-content> -->
+<!--  -->
+<!-- <div mat-dialog-actions align="end" class="dialog-footer"> -->
+<!--     <button class="btn btn-fill btn-info btn-md" (click)="postComment()" [disabled]="!form.valid" type="button"> -->
+<!--         Guardar  -->
+<!--     </button> -->
+<!-- </div> -->
+
+<div class="modal-header1 text-left row mb-1">
+  <h6 class="modal-title">Información alerta</h6>
+  <button type="button" class="close mt--5 mr--2" (click)="close()">
+    <i class="fa fa-times icon-modal-close"></i>
+  </button>
+</div>
+
+<mat-dialog-content class="mat-typography">
+  <form class="form-horizontal" [formGroup]="form" autocomplete="off">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="map-container">
+            <app-map-card [lat]="latE" [lng]="lngE" [heightE]="heightE" #mapCard></app-map-card>
+            <div class="info-card">
+              <strong>Usuario</strong><br>
+              <p>
+                <small>Nombre: <strong>{{ user.name }}</strong></small><br>
+                <small>Cédula: <strong>{{ user.ci }}</strong></small><br>
+                <small>Teléfono: <strong>{{ user.phone }}</strong></small><br>
+                <small>Dirección: <strong>{{ user.address }}</strong></small><br>
+                <small>Dirección Actual: <strong>{{ user.current_position }}</strong></small><br>
+                <a href="#" (click)="sendWhatsAppMessage($event)">
+                  <i class="fab fa-whatsapp"></i> Compartir
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline" style="border: 2px #000000;">
+          <mat-label>Motivo de alerta</mat-label>
+          <input matInput name="comment" formControlName="comment">
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end" class="dialog-footer">
+  <button class="btn btn-fill btn-info btn-md" (click)="postComment()" [disabled]="!form.valid" type="button">
+    Guardar
+  </button>
+</div>

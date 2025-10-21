@@ -1,0 +1,67 @@
+<nav class="navbar navbar-transparent navbar-absolute">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand1" href="#">
+        <!-- <a></a>
+                <img src="assets/img/icons/shadow.png" /> -->
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+<div class="wrapper wrapper-full-page">
+  <div class="full-page login-page" data-color="bluetrack" data-image="assets/img/loginBG.jpg">
+
+    <div class="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+            <form [formGroup]="form" class="form-horizontal">
+              <div class="card">
+                <div class="form-group text-center">
+                  <img style="height: 100px;" src="assets/img/icons/shadow.PNG" class="navbar-brand-img" alt="..." />
+                </div>
+                <div class="content">
+                  <div class="col-xs-12  col-sm-12 col-md-12">
+                    <div class="row">
+                      <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Correo Electrónico</mat-label>
+                        <input matInput name="email" formControlName="email"
+                          oninput="javascript:this.value=this.value.toLowerCase();">
+                      </mat-form-field>
+                    </div>
+                    <div class="row">
+                      <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput [type]="showPassword ? 'text' : 'password'" name="password"
+                          formControlName="password">
+                        <mat-icon style="cursor: pointer;" matSuffix (click)="togglePasswordVisibility()">
+                          {{showPassword?'visibility_off':'visibility'}}
+                        </mat-icon>
+                      </mat-form-field>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12">
+                        <a style="cursor: pointer;" (click)="openRecoverPassword()">¿Olvidaste
+                          tu contraseña?</a>
+                      </div>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+
+                <div class="footer text-center">
+                  <button type="submit" class="btn btn-fill btn-info btn-wd" (click)="login()">Login</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

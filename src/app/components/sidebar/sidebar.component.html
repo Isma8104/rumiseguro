@@ -1,0 +1,125 @@
+<div class="sidebar" data-color="bluetrack" data-image="assets/img/full-screen-image-3.jpg">
+  <div class="logo">
+    <a class="simple-text">
+      <img src="assets/img/icons/shadow_white.PNG" height="150px" style="margin-left: 50px;">
+    </a>
+  </div>
+
+  <div class="sidebar-wrapper">
+    <div class="user">
+      <div class="info">
+        <div class="photo" style="margin-top: 10px;">
+          <img src="assets/img/blue/avatar.png" />
+        </div>
+
+        <a>
+          <span style="font-size: 12px;">
+            {{ role }}
+            <!-- <b class="caret"></b> -->
+          </span>
+          <span style="font-size: 10px;">
+           Shadow
+          </span>
+        </a>
+
+        <!-- <div class="collapse" id="collapseExample">
+          <ul class="nav">
+            <li routerLinkActive="active">
+              <a routerLink="/profile">
+                                <span class="sidebar-mini">MP</span>
+                                <span class="sidebar-normal">Mi Perfil</span>
+                            </a>
+            </li>
+          </ul>
+        </div> -->
+      </div>
+    </div>
+
+    <ul class="nav" *ngIf="role === 'SUPER-ADMIN' || role === 'ADMINISTRATOR'">
+
+      <li routerLinkActive="active">
+        <a routerLink="/home">
+          <i class="pe-7s-home"></i>
+          <p>Inicio</p>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="/teams">
+          <i class="pe-7s-ribbon"></i>
+          <p>Teams</p>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="/central">
+          <i class="pe-7s-ribbon"></i>
+          <p>Centrales</p>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="/operators">
+          <i class="pe-7s-users"></i>
+          <p>Operadores</p>
+        </a>
+      </li>
+
+      <li routerLinkActive="active" *ngIf="role === 'SUPER-ADMIN'">
+        <a routerLink="/keys">
+          <i class="pe-7s-key"></i>
+          <p>Códigos</p>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/map">
+          <i class="pe-7s-map-2"></i>
+          <p>Monitoreo</p>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/reports">
+          <i class="pe-7s-copy-file"></i>
+          <p>Reportes</p>
+        </a>
+      </li>
+
+    </ul>
+
+    <ul class="nav" *ngIf="role !== 'SUPER-ADMIN' &&  role !== 'ADMINISTRATOR'">
+
+      <li routerLinkActive="active">
+        <a routerLink="/home">
+          <i class="pe-7s-home"></i>
+          <p>Inicio</p>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="/teams">
+          <i class="pe-7s-ribbon"></i>
+          <p>Teams</p>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a routerLink="/map">
+          <i class="pe-7s-map-2"></i>
+          <p>Monitoreo</p>
+        </a>
+      </li>
+    </ul>
+
+    <hr>
+    <div class="sidebar-footer">
+      <ul class="nav">
+        <li routerLinkActive="active">
+          <a routerLink="/profile">
+            <i class="pe-7s-user"></i>
+            <p>Mi Perfil</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

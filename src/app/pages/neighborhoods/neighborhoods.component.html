@@ -1,0 +1,108 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <!-- <div class="row" *ngIf="countTeams > 1 && !selectTeam">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Teams asignados</h4>
+                        <p class="category"></p>
+                    </div>
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="col-md-3" *ngFor="let item of teams; let i=index">
+                            <div class="card" style="margin-right: 5px; margin-left: 5px;" (click)="getNeighborhoodByTeam(item)" >
+                                <article class="profile">
+                                    <img src="data:image/png;base64,{{item.image}}" class="contain" />
+
+                                    <div class="name-event p-1">
+                                        TEAM {{ item.name?.substring(0,87) + (item.name?.length > 87 ? '...' : '') }}
+                                    </div>
+        
+                                </article>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- *ngIf="selectTeam" -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Centrales ({{team.name}}): {{ count }}</h4>
+                        <p class="category"></p>
+                    </div>
+                    <br>
+                    <form [formGroup]="searchForm" class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline"
+                                    style="border: 2px #000000;">
+                                    <mat-label>Buscar por nombre, identificador o descripción</mat-label>
+                                    <input matInput name="value" (keyup)="getNeighborhoodByTeam()"
+                                        formControlName="value">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Identificador</th>
+                                    <th>Descripción</th>
+                                    <th class="text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="neighborhoods.length > 0">
+                                <tr *ngFor="let item of neighborhoods; let i=index;">
+                                    <td class="td-size">{{item.name}}</td>
+                                    <td class="td-size">{{item.identifier}}</td>
+                                    <td class="td-size">{{item.description}}</td>
+                                    <td class="td-actions text-right">
+                                        <a (click)="openInfoModal(item)" rel="tooltip" title="Información"
+                                            class="btn btn-danger btn-simple btn-xs">
+                                            <i class="fa fa-info"></i>
+                                        </a>
+                                        <a (click)="showUsers(item)" rel="tooltip" title="Ver usuario"
+                                            class="btn btn-primary btn-simple btn-xs">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a *ngIf="role === ('SUPER-ADMIN' || 'ADMINISTRATOR')"
+                                            (click)="openModal('Editar', item)" rel="tooltip" title="Editar"
+                                            class="btn btn-warning btn-simple btn-xs">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="msg-empty" *ngIf="neighborhoods.length ===  0">No existen registros</p>
+                    </div>
+                    <br>
+                    <div *ngIf="neighborhoods?.length !==0" class="container-fluid">
+                        <div class="row">
+                            <div class="col d-flex justify-content-end">
+                                <mat-paginator #paginator showFirstLastButtons [length]="pagination.total"
+                                    [pageSize]="pagination.itemsPage" (page)="changePage($event)">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<caption>
+    <button *ngIf="role === 'SUPER-ADMIN' || role === 'ADMINISTRATOR'" (click)="openModal('Agregar')" id="addBtn"
+        class="btn btn-icon btn-round btn-twitter">
+        <img src="assets/img/icons/mas.png">
+    </button>
+</caption>

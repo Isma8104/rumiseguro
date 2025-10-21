@@ -1,0 +1,65 @@
+@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+
+#mapC {
+    width: 100%;
+    height: 30vh;
+}
+
+#addBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    border-radius: 100% !important;
+    float: right;
+}
+
+#addExcel {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    border-radius: 100% !important;
+    float: right;
+}
+
+
+.modal-header1 {
+    /* border-bottom: 1px solid #DDDDDD; */
+    border: transparent;
+    padding: 20px;
+    text-align: center;
+    display: block !important;
+}
+
+.modal-header1 button.close {
+    margin-top: -25px;
+}
+
+.modal-title1 {
+    line-height: 1.1;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.my-custom-icon-class .swal2-icon {
+    font-size: 24px;
+    /* Cambia el tamaño del icono según tus necesidades */
+}
+
+.msg-empty {
+    text-align: center !important;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 3%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+.td-size {
+    max-width: 300px;
+    /* Define el ancho máximo según tus necesidades */
+    white-space: nowrap;
+    /* Evita que el texto se divida en varias líneas */
+    overflow: hidden;
+    /* Oculta el texto que excede el ancho máximo */
+    text-overflow: ellipsis;
+    /* Agrega puntos suspensivos al texto que no se muestra */
+}

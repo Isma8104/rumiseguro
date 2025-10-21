@@ -1,0 +1,87 @@
+.btn-actions{
+    height: 100% !important;
+    width: 120%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+    border-radius: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center !important;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+}
+
+button[mat-button] {
+  width: 100%;
+}
+
+.custom-mat-button {
+  border: 2px solid #ADD8E6 !important;
+  border-radius: 8px !important;
+  background-color: transparent !important;
+}
+
+.custom-mat-button:hover {
+  background-color: #ADD8E6 !important;
+  color: white !important;
+}
+
+.custom-mat-button-red {
+  border: 2px solid #E57373 !important;
+  border-radius: 8px !important;
+  background-color: transparent !important;
+}
+
+.custom-mat-button-red:hover {
+  background-color: #E57373 !important;
+  color: white !important;
+}
+
+.center-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Ajusta el ancho según tus necesidades */
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

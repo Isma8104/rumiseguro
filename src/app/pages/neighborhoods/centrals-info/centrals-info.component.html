@@ -1,0 +1,87 @@
+<div class="modal-header1 text-left row mb-1">
+    <h6 class="modal-title">{{centralName}}</h6>
+    <button type="button" class="close mt--5 mr--2" (click)="close()">
+        <i class="fa fa-times icon-modal-close"></i>
+    </button>
+</div>
+<mat-dialog-content class="mat-typography">
+    <form class="form-horizontal" [formGroup]="form" autocomplete="off">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="row gx-3">
+                    
+                    <mat-form-field class="col-xs-12 col-sm-3 col-md-3" appearance="outline"
+                        style="border: 2px #000000;" >
+                        <mat-label>Tipo de evento</mat-label>
+                        <mat-select formControlName="typeEvent" required>
+                            <mat-option *ngFor="let opcion of options" [value]="opcion">{{ opcion }}</mat-option>
+                        </mat-select>
+                        <input matInput name="typeEvent" formControlName="typeEvent"
+                            oninput="javascript:this.value=this.value.toUpperCase();">
+                        <mat-error *ngIf="(errorsForm.typeEvent.touched) && errorsForm.typeEvent.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-xs-12 col-sm-3 col-md-3" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Desde</mat-label>
+                        <input type="date" matInput name="startDate" formControlName="startDate">
+                        <mat-error
+                            *ngIf="(errorsForm.startDate.touched) && errorsForm.startDate.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-xs-12 col-sm-3 col-md-3" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Hasta</mat-label>
+                        <input type="date" matInput name="endDate" formControlName="endDate">
+                        <mat-error *ngIf="(errorsForm.endDate.touched) && errorsForm.endDate.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <div class="d-flex justify-content-center align-items-center col-xs-12 col-sm-3 col-md-3">
+
+                        <button class="btn btn-fill btn-info btn-md mt-2" (click)="searchInfo()" type="button" [disabled]="form.invalid">
+                            Filtrar
+                        </button>
+                    </div>
+                        
+                </div>
+                    
+
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tipo de evento</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let info of information">
+                <td *ngFor="let line of info">
+                    {{ line }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- <div class="mat-card " *ngFor="let info of information">
+        <div class="row mb-3 card-padding">
+            <p class="col-md-12 col-sm-12 col-xs-12" *ngFor="let line of info">{{line}}</p>
+        </div>
+        
+    </div> -->
+    
+    <!-- <div mat-dialog-actions align="end" class="dialog-footer"> -->
+    <!-- </div> -->
+</mat-dialog-content>

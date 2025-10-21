@@ -1,0 +1,120 @@
+<div class="modal-header1 text-left row mb-1">
+    <h6 class="modal-title">{{title}} Team</h6>
+    <button type="button" class="close mt--5 mr--2" (click)="close()">
+        <i class="fa fa-times icon-modal-close"></i>
+    </button>
+</div>
+
+<mat-dialog-content class="mat-typography">
+    <form class="form-horizontal" [formGroup]="form" autocomplete="off">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="custom-dropzone-p" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                            <ngx-dropzone-label>
+                                <div>
+                                    <img src="assets/img/icons/upload.png" width="64px" height="64px"
+                                        alt="Imagen del team">
+                                    <h6 style="color: #000;">Subir imagen del team</h6>
+                                </div>
+                            </ngx-dropzone-label>
+                            <ngx-dropzone-image-preview class="center" id="preview" ngProjectAs="ngx-dropzone-preview"
+                                *ngFor="let f of files" [file]="f[0]" [removable]="true" (removed)="onRemove(f[0])">
+                            </ngx-dropzone-image-preview>
+                        </div>
+                        <input type="hidden" required formControlName="imgName" id="imgName" name="imgName">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <mat-form-field class="col-xs-12 col-sm-4 col-md-4" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput name="name" formControlName="name"
+                            oninput="javascript:this.value=this.value.toUpperCase();">
+                        <mat-error *ngIf="(errorsForm.name.touched) && errorsForm.name.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-xs-12 col-sm-4 col-md-4" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Inicio Licencia</mat-label>
+                        <input type="date" matInput name="licenseStart" formControlName="licenseStart">
+                        <mat-error
+                            *ngIf="(errorsForm.licenseStart.touched) && errorsForm.licenseStart.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-xs-12 col-sm-4 col-md-4" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Fin Licencia</mat-label>
+                        <input type="date" matInput name="licenseEnd" formControlName="licenseEnd">
+                        <mat-error *ngIf="(errorsForm.licenseEnd.touched) && errorsForm.licenseEnd.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <br>
+                <div class="row">
+                    <mat-form-field class="col-xs-12 col-sm-2 col-md-2" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Máximo centrales</mat-label>
+                        <input type="number" matInput name="maxPlants" formControlName="maxPlants">
+                        <mat-error *ngIf="(errorsForm.maxPlants.touched) && errorsForm.maxPlants.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-xs-12 col-sm-2 col-md-2" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Máximo botones</mat-label>
+                        <input type="number" matInput name="maxButtons" formControlName="maxButtons">
+                        <mat-error *ngIf="(errorsForm.maxButtons.touched) && errorsForm.maxButtons.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-xs-12 col-sm-2 col-md-2" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Máximo usuarios</mat-label>
+                        <input type="number" matInput name="maxUsers" formControlName="maxUsers">
+                        <mat-error *ngIf="(errorsForm.maxUsers.touched) && errorsForm.maxUsers.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-xs-12 col-sm-2 col-md-2" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Radio cobertura (m)</mat-label>
+                        <input type="number" matInput name="radius" formControlName="radius">
+                        <mat-error *ngIf="(errorsForm.radius.touched) && errorsForm.radius.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-xs-12 col-sm-4 col-md-4" appearance="outline" style="border: 2px #000000;">
+                        <mat-label>Compania</mat-label>
+                        <mat-select name="company" formControlName="company">
+                            <mat-option value=""> Seleccionar </mat-option>
+                            <mat-option value="ABIC"> ABIC </mat-option>
+                            <mat-option value="SHADOW"> SHADOW </mat-option>
+                          </mat-select>
+                        <mat-error *ngIf="(errorsForm.company.touched) && errorsForm.company.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end" class="dialog-footer">
+    <button class="btn btn-fill btn-info btn-md" (click)="configTeams()" [disabled]="!form.valid" type="button">
+        Guardar
+    </button>
+</div>

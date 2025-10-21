@@ -1,0 +1,26 @@
+<div class="modal-header1 text-left row mb-1">
+    <h6 class="modal-title">Importar Vecinos</h6>
+    <button type="button" class="close mt--5 mr--2" (click)="close()">
+        <i class="fa fa-times icon-modal-close"></i>
+    </button>
+</div>
+
+<mat-dialog-content class="mat-typography">
+    <form class="form-horizontal" [formGroup]="form" autocomplete="off">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <input type="file" formControlName="file" (change)="onFileChange($event)" />
+        </div>
+
+        <br>
+        <br>
+        <div *ngIf="responsesError.length > 0">
+            <small *ngFor="let item of responsesError">{{ item.email }} no creado <br></small>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end" class="dialog-footer">
+    <button class="btn btn-fill btn-info btn-md" (click)="postNeighbours()" [disabled]="this.lists.length === 0" type="button">
+        Guardar 
+    </button>
+</div>

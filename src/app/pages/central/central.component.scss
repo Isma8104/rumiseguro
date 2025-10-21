@@ -1,0 +1,17 @@
+.card-img-top {
+    width: 100%; /* Ancho del 100% del contenedor */
+    height: 20vh; /* Altura fija */
+    border-bottom: 1px solid gray;
+    object-fit: contain; /* Ajuste de la imagen para cubrir el contenedor */
+}
+
+#card-team{
+    border: none !important;
+    border-radius: 2vh;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+
+    &:hover{
+        transform: scale(1.01);
+    }
+}

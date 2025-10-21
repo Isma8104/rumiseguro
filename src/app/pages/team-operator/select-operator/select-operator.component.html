@@ -1,0 +1,37 @@
+<div class="modal-header1 text-left row mb-1">
+    <h6 class="modal-title">Asignar Operador</h6>
+    <button type="button" class="close mt--5 mr--2" (click)="close()">
+        <i class="fa fa-times icon-modal-close"></i>
+    </button>
+</div>
+
+<mat-dialog-content class="mat-typography">
+    <form class="form-horizontal" [formGroup]="searchForm" autocomplete="off">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Seleccionar Operador</mat-label>
+                        <input type="search" matInput placeholder="Buscar team" [matAutocomplete]="auto"
+                            [ngModel]="word" [formControl]="operatorCtrl">
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let item of filteredOperators | async" [value]="item">
+                                {{ item.fullName }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end" class="dialog-footer">
+    <button class="btn btn-fill btn-info btn-md" (click)="postOperatorTeam()" [disabled]="!searchForm.valid"
+        type="button">
+        Guardar
+    </button>
+</div>

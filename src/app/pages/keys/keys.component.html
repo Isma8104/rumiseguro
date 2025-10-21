@@ -1,0 +1,47 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Códigos: {{count}}</h4>
+                        <p class="category"></p>
+                    </div>
+
+                    <div class="content table-responsive table-full-width">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="keys.length > 0">
+                                <tr *ngFor="let item of keys; let i=index;">
+                                    <td>{{item.key}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="msg-empty" *ngIf="keys.length ===  0">No existen registros</p>
+                    </div>
+                    <br>
+                    <div *ngIf="keys?.length !==0" class="container-fluid">
+                        <div class="row">
+                            <div class="col d-flex justify-content-end">
+                                <mat-paginator #paginator showFirstLastButtons [length]="pagination.total"
+                                    [pageSize]="pagination.itemsPage" (page)="changePage($event)">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<caption>
+    <button (click)="openModal()" id="addBtn" class="btn btn-icon btn-round btn-twitter">
+        <img src="assets/img/icons/mas.png">
+      </button>
+</caption>

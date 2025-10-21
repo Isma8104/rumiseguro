@@ -1,0 +1,44 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Teams: {{ count }}</h4>
+                        <p class="category"></p>
+                    </div>
+                    <br>
+
+                    <form [formGroup]="searchForm" class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline"
+                                    style="border: 2px #000000;">
+                                    <mat-label>Buscar por nombre</mat-label>
+                                    <input matInput name="value" (keyup)="getTeams()" formControlName="value">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3" *ngFor="let item of teams">
+                                <div class="card" (click)="showPlants(item)" id="card-team">
+                                    <img class="card-img-top" src="data:image/png;base64,{{item.image}}" />
+                            
+                                    <div class="card-body" style="text-align: center;">
+                                        <strong>TEAM - {{ item.name }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

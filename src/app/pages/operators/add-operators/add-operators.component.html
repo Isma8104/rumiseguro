@@ -1,0 +1,102 @@
+<div class="modal-header1 text-left row mb-1">
+  <h6 class="modal-title">{{title}} Operador</h6>
+  <button type="button" class="close mt--5 mr--2" (click)="close()">
+    <i class="fa fa-times icon-modal-close"></i>
+  </button>
+</div>
+
+<mat-dialog-content class="mat-typography">
+  <form class="form-horizontal" [formGroup]="form" autocomplete="off">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+
+          <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline" style="border: 2px #000000;">
+            <mat-label>Rol</mat-label>
+            <mat-select formControlName="role" (selectionChange)="selectedRole($event.value)">
+              <mat-option *ngIf="role === 'SUPER-ADMIN'" value="SUPER-ADMIN">Super Administrador</mat-option>
+              <mat-option value="ADMINISTRATOR">Administrador</mat-option>
+              <mat-option value="OPERATOR">Operador</mat-option>
+              <mat-option value="USER">Usuario</mat-option>
+            </mat-select>
+            <mat-error *ngIf="(errorsForm.role.touched) && errorsForm.role.errors?.required">
+              Tipo es obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline" style="border: 2px #000000;">
+            <mat-label>Cédula</mat-label>
+            <input matInput name="ci" formControlName="ci" (keypress)="validarNumeros($event)">
+            <mat-error *ngIf="(errorsForm.ci.touched) && errorsForm.ci.errors?.required">
+              Campo obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline" style="border: 2px #000000;">
+            <mat-label>Nombre</mat-label>
+            <input matInput name="fullName" formControlName="fullName">
+            <mat-error *ngIf="(errorsForm.fullName.touched) && errorsForm.fullName.errors?.required">
+              Campo obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline" style="border: 2px #000000;">
+            <mat-label>Correo Electrónico</mat-label>
+            <input matInput name="email" formControlName="email"
+              oninput="javascript:this.value=this.value.toLowerCase();">
+            <mat-error *ngIf="(errorsForm.email.touched) && errorsForm.email.errors?.required">
+              Campo obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <!-- <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput [type]="showPassword ? 'text' : 'password'" name="password"
+                            formControlName="password">
+                        <mat-icon style="cursor: pointer;" matSuffix (click)="showPassword = !showPassword">
+                            {{showPassword?'visibility_off':'visibility'}}
+                        </mat-icon>
+                        <mat-error *ngIf="(errorsForm.password.touched) && errorsForm.password.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field> -->
+          <hr>
+          <!--PERMISSIONS-->
+          <!-- <div class="ml-3">
+                        <section [formGroup]="permissions">
+                            <h2 class="font-weight-bold">Permisos:</h2>
+                            <p><mat-checkbox formControlName="p1"  color="primary">Manejo de cuentas administrador</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="p2" color="primary">Manejo de cuentas de usuario</mat-checkbox></p>
+
+                            <p><mat-checkbox formControlName="p3" color="primary">Manejo de teams</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="p4" color="primary">Manejo de centrales</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="p5" color="primary">Generar reportes</mat-checkbox></p>
+
+                            <p><mat-checkbox formControlName="p6" color="primary">Operador de alarmas</mat-checkbox></p>
+                            <p><mat-checkbox formControlName="p7" color="primary">Ver alarmas pendietes espejo</mat-checkbox></p>
+                        </section>
+
+                        <section [formGroup]="permissions">
+                            <h4>You chose:</h4>
+                            {{permissions.value | json}}
+                        </section>
+                    </div> -->
+
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="star" class="dialog-footer" *ngIf="this.title === 'Editar'">
+  <button class="btn btn-fill btn-danger btn-md" (click)="resetPaswordOperator()" type="button">
+    Restablecer Contraseña
+  </button>
+</div>
+
+<div mat-dialog-actions align="end" class="dialog-footer">
+  <button class="btn btn-fill btn-info btn-md" (click)="configOperator()" [disabled]="!form.valid" type="button">
+    Guardar
+  </button>
+</div>

@@ -1,0 +1,191 @@
+<div class="modal-header1 text-left row mb-1">
+    <h6 class="modal-title">{{title}} Vecino</h6>
+    <button type="button" class="close mt--5 mr--2" (click)="close()">
+        <i class="fa fa-times icon-modal-close"></i>
+    </button>
+</div>
+
+<mat-dialog-content class="mat-typography">
+    <mat-horizontal-stepper #stepper class="rounded">
+        <mat-step label="Datos personales" state="category" [stepControl]="form">
+            <form class="form-horizontal" [formGroup]="form" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="custom-dropzone-p" ngx-dropzone [accept]="'image/*'"
+                                    (change)="onSelect($event)">
+                                    <ngx-dropzone-label>
+                                        <div>
+                                            <img src="assets/img/icons/upload.png" width="64px" height="64px">
+                                            <h6 style="color: #000;">Subir imagen</h6>
+                                        </div>
+                                    </ngx-dropzone-label>
+                                    <ngx-dropzone-image-preview class="center" id="preview"
+                                        ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f[0]"
+                                        [removable]="true" (removed)="onRemove(f[0])">
+                                    </ngx-dropzone-image-preview>
+                                </div>
+                                <input type="hidden" required formControlName="imgName" id="imgName" name="imgName">
+                            </div>
+                        </div> -->
+                        <br>
+                        <div class="row">
+                            <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                                style="border: 2px #000000;">
+                                <mat-label>Cédula</mat-label>
+                                <input matInput name="ci" formControlName="ci" (keypress)="validarNumeros($event)">
+                                <mat-error *ngIf="(errorsForm.ci.touched) && errorsForm.ci.errors?.required">
+                                    Campo obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                                style="border: 2px #000000;">
+                                <mat-label>Correo</mat-label>
+                                <input matInput name="email" formControlName="email">
+                                <mat-error *ngIf="(errorsForm.email.touched) && errorsForm.email.errors?.required">
+                                    Campo obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                                style="border: 2px #000000;">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput name="name" formControlName="name">
+                                <mat-error *ngIf="(errorsForm.name.touched) && errorsForm.name.errors?.required">
+                                    Campo obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                                style="border: 2px #000000;">
+                                <mat-label>Contraseña</mat-label>
+                                <input matInput [type]="showPassword ? 'text' : 'password'" name="password"
+                                    formControlName="password">
+                                <mat-icon style="cursor: pointer;" matSuffix (click)="showPassword = !showPassword">
+                                    {{showPassword?'visibility_off':'visibility'}}
+                                </mat-icon>
+                                <mat-error
+                                    *ngIf="(errorsForm.password.touched) && errorsForm.password.errors?.required">
+                                    Campo obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                                style="border: 2px #000000;">
+                                <mat-label>Teléfono</mat-label>
+                                <input matInput name="phone" formControlName="phone" (keypress)="validarNumeros($event)">
+                                <mat-error *ngIf="(errorsForm.phone.touched) && errorsForm.phone.errors?.required">
+                                    Campo obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                                style="border: 2px #000000;">
+                                <mat-label>Agregar Botones</mat-label>
+                                <mat-select formControlName="isButton" (selectionChange)="selectedBtn($event.value)">
+                                    <mat-option [value]="false">No</mat-option>
+                                    <mat-option [value]="true">Si</mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="(errorsForm.isButton.touched) && errorsForm.isButton.errors?.required">
+                                    Tipo es obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline"
+                                style="border: 2px #000000;">
+                                <mat-label>Dirección</mat-label>
+                                <input matInput name="address" formControlName="address">
+                                <mat-error *ngIf="(errorsForm.address.touched) && errorsForm.address.errors?.required">
+                                    Campo obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div mat-dialog-actions class="dialog-footer">
+                <button id="btnPrevious" mat-button matStepperPrevious class="left-button">
+                    Anterior
+                </button>
+                <button id="btnNext" mat-button matStepperNext #next class="right-button">
+                    Siguiente
+                </button>
+            </div>
+        </mat-step>
+
+        <mat-step label="Ubicación" state="category" [stepControl]="formUbi">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <app-map-card [lat]="latE" [lng]="lngE" [opt]="'click'" [heightE]="heightE"
+                        (coorsEmit)="setLatLng($event)"></app-map-card>
+                </div>
+            </div>
+
+            <div mat-dialog-actions class="dialog-footer">
+                <button id="btnPrevious" mat-button matStepperPrevious class="left-button">
+                    Anterior
+                </button>
+                <button id="btnNext" *ngIf="isButton === true" mat-button matStepperNext #next class="right-button">
+                    Siguiente
+                </button>
+                <button id="btnNext" (click)="configNeighs()" *ngIf="isButton === false" mat-button matStepperNext #next
+                    class="right-button">
+                    Finalizar
+                </button>
+            </div>
+        </mat-step>
+
+        <mat-step label="Botones" state="category" [stepControl]="formBtns" *ngIf="isButton === true">
+            <form class="form-horizontal" [formGroup]="formBtns" autocomplete="off">
+                <div class="row">
+                    <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Botón 1</mat-label>
+                        <input matInput name="physicalBtn" formControlName="physicalBtn">
+                        <mat-error
+                            *ngIf="(errorsBtnForm.physicalBtn.touched) && errorsBtnForm.physicalBtn.errors?.required">
+                            Campo obligatorio
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Botón 4</mat-label>
+                        <input matInput name="physicalBtnFour" formControlName="physicalBtnFour">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Botón 2</mat-label>
+                        <input matInput name="physicalBtnTwo" formControlName="physicalBtnTwo">
+                    </mat-form-field>
+                    <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Botón Wifi</mat-label>
+                        <input matInput name="physicalBtnWifi" formControlName="physicalBtnWifi">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-xs-12 col-sm-6 col-md-6" appearance="outline"
+                        style="border: 2px #000000;">
+                        <mat-label>Botón 3</mat-label>
+                        <input matInput name="physicalBtnThree" formControlName="physicalBtnThree">
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div mat-dialog-actions class="dialog-footer">
+                <button id="btnPrevious" mat-button matStepperPrevious class="left-button">
+                    Anterior
+                </button>
+                <button id="btnNext" (click)="configNeighs()" mat-button matStepperNext #next class="right-button">
+                    Finalizar
+                </button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</mat-dialog-content>

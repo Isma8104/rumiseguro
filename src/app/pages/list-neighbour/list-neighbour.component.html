@@ -1,0 +1,84 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Vecinos ({{neighborhoods.name}}): {{ count }} <mat-icon title="Enganchar red"
+                                style="float: right; margin-top: 2px; cursor: pointer;"
+                                (click)="openRedSettings('CENTRAL')">settings</mat-icon></h4>
+
+                        <p class="category"></p>
+                    </div>
+                    <br>
+                    <form [formGroup]="searchForm" class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <mat-form-field class="col-xs-12 col-sm-12 col-md-12" appearance="outline"
+                                    style="border: 2px #000000;">
+                                    <mat-label>Buscar por identificación, nombre, correo o teléfono</mat-label>
+                                    <input matInput name="value" (keyup)="getNeighbour()" formControlName="value">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="content table-responsive table-full-width">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Cédula</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Teléfono</th>
+                                    <th class="text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="neighbour.length > 0">
+                                <tr *ngFor="let item of neighbour; let i=index;">
+                                    <td class="td-size">{{item.ci}}</td>
+                                    <td class="td-size">{{item.name}}</td>
+                                    <td class="td-size">{{item.email}}</td>
+                                    <td class="td-size">{{item.phone}}</td>
+                                    <td class="td-actions text-right">
+                                        <a (click)="openRedSettings('USUARIO', item._id)" rel="tooltip" title="Boton Wifi" class="btn btn-primary btn-simple btn-xs">
+                                            <i class="fa fa-wifi"></i>
+                                        </a>
+                                        <a (click)="openModal('Editar', item)" rel="tooltip" title="Editar"
+                                            class="btn btn-warning btn-simple btn-xs">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="msg-empty" *ngIf="neighbour.length ===  0">No existen registros</p>
+                    </div>
+                    <br>
+                    <div *ngIf="neighbour?.length !==0" class="container-fluid">
+                        <div class="row">
+                            <div class="col d-flex justify-content-end">
+                                <mat-paginator #paginator showFirstLastButtons [length]="pagination.total"
+                                    [pageSize]="pagination.itemsPage" (page)="changePage($event)">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<caption>
+    <button (click)="openExcelImport()" id="addExcel" class="btn btn-icon btn-round btn-fill btn-success">
+        <img src="assets/img/icons/excel.png">
+    </button>
+</caption>
+
+<caption>
+    <button (click)="openModal('Agregar')" id="addBtn" class="btn btn-icon btn-round btn-twitter">
+        <img src="assets/img/icons/mas.png">
+    </button>
+</caption>

@@ -1,0 +1,85 @@
+<h2 mat-dialog-title class="mat-typography">{{name}}</h2>
+<mat-dialog-content>
+  <div class="status-container">
+    <div *ngIf="connected == null || connected == ''" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+    <div *ngIf="connected == '1'" class="status-item">
+      <div class="icon-container">
+        <mat-icon [ngStyle]="{color: 'green'}">wifi</mat-icon>
+      </div>
+      <div class="text-container">
+        <div>En línea</div>
+        <div>{{ connectedTimeAgo }}</div>
+        <div>{{ connectedAt | date:'dd/MM/yy HH:mm' }}</div>
+      </div>
+    </div>
+    <div *ngIf="connected != '1' && connected != null && connected != ''" class="status-item">
+      <div class="icon-container">
+        <mat-icon [ngStyle]="{color: 'red'}">wifi</mat-icon>
+      </div>
+      <div class="text-container">
+        <div>Fuera de línea</div>
+        <div>{{ connectedTimeAgo }}</div>
+        <div>{{ connectedAt | date:'dd/MM/yy HH:mm' }}</div>
+      </div>
+    </div>
+
+    <div *ngIf="powerOutage == null || powerOutage == ''" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+    <div *ngIf="powerOutage == '1'" class="status-item">
+      <div class="icon-container">
+        <mat-icon [ngStyle]="{color: 'green'}">power</mat-icon>
+      </div>
+      <div class="text-container">
+        <div>Revisión conectado</div>
+        <div>{{ powerOutageTimeAgo }}</div>
+        <div>{{ powerOutageAt | date:'dd/MM/yy HH:mm' }}</div>
+      </div>
+    </div>
+    <div *ngIf="powerOutage != '1' && powerOutage != null && powerOutage != ''" class="status-item">
+      <div class="icon-container">
+        <mat-icon [ngStyle]="{color: 'red'}">power</mat-icon>
+      </div>
+      <div class="text-container">
+        <div>Revisión desconectado</div>
+        <div>{{ powerOutageTimeAgo }}</div>
+        <div>{{ powerOutageAt | date:'dd/MM/yy HH:mm' }}</div>
+      </div>
+    </div>
+    <div *ngIf="batteryStatus == null" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+    <div *ngIf="batteryStatus <= threshold && batteryStatus != null" class="status-item">
+      <div class="icon-container">
+        <mat-icon [ngStyle]="{color: 'red'}">battery_alert</mat-icon>
+      </div>
+      <div class="text-container">
+        <div>{{ batteryStatus }}V</div>
+        <div>{{ batteryStatusTimeAgo }}</div>
+        <div>{{ batteryStatusAt | date:'dd/MM/yy HH:mm' }}</div>
+      </div>
+    </div>
+    <div *ngIf="batteryStatus > threshold && batteryStatus != null" class="status-item">
+      <div class="icon-container">
+        <mat-icon [ngStyle]="{color: 'green'}">battery_alert</mat-icon>
+      </div>
+      <div class="text-container">
+        <div>{{ batteryStatus }}V</div>
+        <div>{{ batteryStatusTimeAgo }}</div>
+        <div>{{ batteryStatusAt | date:'dd/MM/yy HH:mm' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-container">
+    <div class="grid-item" *ngFor="let alert of alerts">
+      <button mat-button class="custom-mat-button" (click)="sendCommand(alert)">{{ alert.text }}</button>
+    </div>
+  </div>
+  <div class="center-button-container">
+    <button mat-button class="custom-mat-button-red" (click)="sendCommand({'value': '0'})">Apagar</button>
+  </div>
+</mat-dialog-content>
+<div tabindex="-1" cdkFocusInitial></div>

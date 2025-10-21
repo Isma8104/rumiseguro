@@ -1,0 +1,131 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Reportes</h4>
+                        <p class="category"></p>
+                    </div>
+                    <br>
+
+                    <form class="form-horizontal">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <mat-form-field class="col-xs-4 col-sm-4 col-md-4" appearance="outline">
+                                    <mat-label>Seleccionar Team</mat-label>
+                                    <input type="search" placeholder="Buscar team" matInput [formControl]="teamsCtrl"
+                                        [matAutocomplete]="auto" (ngModelChange)="onOptionChange($event)">
+
+                                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="showName" (optionSelected)="selected($event)">
+                                        <mat-option *ngFor="let item of filteredTeams | async" [value]="item">
+                                            {{ item.name }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+
+                                <form [formGroup]="formSearch" autocomplete="off">
+                                    <mat-form-field class="col-xs-3 col-sm-3 col-md-3" appearance="outline"
+                                        style="border: 2px #000000;">
+                                        <mat-label>Desde</mat-label>
+                                        <input type="date" matInput name="startDate" formControlName="startDate">
+
+                                        <mat-error
+                                            *ngIf="(errorsFormSearch.startDate.touched) && errorsFormSearch.startDate.errors?.required">
+                                            Campo obligatorio
+                                        </mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="col-xs-3 col-sm-3 col-md-3" appearance="outline"
+                                        style="border: 2px #000000;">
+                                        <mat-label>Hasta</mat-label>
+                                        <input type="date" matInput name="endDate" formControlName="endDate">
+                                        <mat-error
+                                            *ngIf="(errorsFormSearch.endDate.touched) && errorsFormSearch.endDate.errors?.required">
+                                            Campo obligatorio
+                                        </mat-error>
+                                    </mat-form-field>
+
+                                    <div class="col-xs-2 col-sm-2 col-md-2">
+                                        <button class="btn btn-fill btn-lg btn-twitter mt-2" (click)="searchReport()" [disabled]="disableBtn">
+                                            Buscar
+                                        </button>
+                                    </div>
+                                    <!-- <button matTooltip="Buscar" matTooltipPosition="above" mat-fab color="primary"
+                                        (click)="searchReport()" [disabled]="disableBtn" mat>
+                                        <mat-icon>search</mat-icon>
+                                    </button>
+                                    <button matTooltip="Generar Reporte" matTooltipPosition="above" mat-fab
+                                        color="primary" (click)="generateReport()" [disabled]="alerts?.length == 0" mat>
+                                        <mat-icon>picture_as_pdf</mat-icon>
+                                    </button> -->
+
+                                </form>
+
+                                <br>
+
+
+
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+
+                    <div *ngIf="teamSelect && count >=0">
+                        <div class="header ml-3">
+                            <h4 class="title">Reporte Team <strong> {{nameTeam}}</strong> </h4>
+                            <p class="category">Total <strong> {{count}}</strong> alarmas</p>
+                        </div>
+                        <br>
+
+                        <br>
+                        <div class="mt-0 ml-4 mr-4 " style="overflow-x: auto; height: 600px; ">
+                            <table *ngIf="alerts?.length > 0 " class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Fecha</th>
+                                        <th>Fecha de Respuesta</th>
+                                        <th>Tipo</th>
+                                        <th>Origen</th>
+                                        <th>Central</th>
+                                        <th>Usuario CC</th>
+                                        <th>Usuario Nombre</th>
+                                        <th>Operador CC</th>
+                                        <th>Operador Nombre</th>
+                                        <th>Respuesta</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let alert of alerts; let i=index;">
+                                        <td class="td-size">{{ i + 1 }}</td>
+                                        <td class="td-size">{{alert.date | date:'dd/MM/yyyy hh:mm:ss' }}</td>
+                                        <td class="td-size">{{alert.replyDate | date:'dd/MM/yyyy hh:mm:ss' }}</td>
+                                        <td class="td-size">{{alert.type | alertType }}</td>
+                                        <td>Gps</td>
+                                        <td class="td-size">{{alert.access.name}}</td>
+                                        <td class="td-size">{{alert.user?.ci}}</td>
+                                        <td class="td-size">{{alert.user?.name}}</td>
+                                        <td class="td-size">{{alert.administrator?.ci}}</td>
+                                        <td class="td-size">{{alert.administrator?.fullName}}</td>
+                                        <td class="td-size">{{alert.description}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="msg-empty" *ngIf="alerts?.length === 0">No existen registros</p>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<caption>
+    <button id="addBtn" title="Descargar" (click)="generateReport()" [disabled]="alerts?.length == 0" class="btn btn-icon btn-round btn-fill btn-twitter">
+        <img src="assets/img/icons/pdf.png">
+    </button>
+</caption>

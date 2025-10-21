@@ -1,0 +1,139 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="card">
+                    <div class="header" >
+                        <strong class="h4 title">SALA DE MONITOREO</strong>
+                            <mat-icon title="Centrar" style="float: right; cursor: pointer;" (click)="centerMap()">center_focus_strong</mat-icon>
+                        <p class="category"></p>
+                    </div>
+                    <br>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="row">
+                          <form [formGroup]="searchForm" class="form-horizontal">
+                            <div id="map" class="map">
+                                <mat-form-field class="col-xs-3 col-sm-3 col-md-3 custom-input"  appearance="outline" style="border: 2px #000000;">
+                                    <mat-label> Teams</mat-label>
+                                    <mat-select name="value" formControlName="value" (selectionChange)="selected($event.value)">
+                                      <mat-option *ngFor="let item of teams" [value]="item._id">
+                                        TEAM - {{ item.name }}
+                                      </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <div id="card-alert" class="card">
+                                  <div class="card-header">
+                                    <h5 class="h6 mb-0 text-center" style="font-weight: bold;">
+                                      Alertas Pendientes
+                                      <i *ngIf="isLoadingAlerts" class="fas fa-spinner fa-spin"></i>
+                                    </h5>
+                                  </div>
+
+                                  <div class="card-body" >
+                                    <div
+                                      class="timeline timeline-one-side"
+                                      data-timeline-axis-style="dashed"
+                                      data-timeline-content="axis"
+                                    >
+                                      <div class="timeline-block" *ngFor="let item of alerts" style="margin-top: -2vh !important;">
+                                        <span class="timeline-step badge-warning" style="cursor: pointer;" title="Ver más" (click)="showAlertInfo(item)">
+                                          <mat-icon>notifications_active</mat-icon>
+                                          <!-- <img src="{{ getTypeAlert(item.type).img }}" style="height: 4vh; width: 4vh;" alt=""> -->
+                                        </span>
+              
+                                        <div class="timeline-content">
+                                          <div class="d-flex justify-content-between">
+                                            <div>
+                                              <span class="text-sm font-weight-bold">
+                                                {{ getTypeAlert(item.type).type }} - 
+                                                {{ item.access.name }}
+                                              </span>
+                                              <br>
+                                              <small style="font-weight: 500;">{{ item.user.name }}</small>
+                                              <!-- <small style="font-weight: 500;">{{ getTypeAlert(item.type).type }}</small> -->
+                                            </div>
+                          
+                                            <div class="text-right">
+                                              <small class="text-muted">
+                                                <i class="fas fa-clock mr-1"> </i> 
+                                                {{ item.date | date:'HH:mm' }}
+                                              </small>
+                                            </div>
+                                          </div>
+                          
+                                         
+                                        </div>
+                                      </div>
+                          
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                          </form>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+
+            <!-- <div class="col-md-4">
+              <div class="row">
+                <div class="card">
+                    <div class="card-header">
+                      <h6 class="h2 mb-0">Alertas</h6>
+                    </div>
+      
+                    <div class="card-body" id="card-alert">
+                      <div
+                        class="timeline timeline-one-side"
+                        data-timeline-axis-style="dashed"
+                        data-timeline-content="axis"
+                      >
+                        <div class="timeline-block" *ngFor="let item of alerts">
+                          <span class="timeline-step badge-success" style="cursor: pointer;" title="Ver más" (click)="showAlertInfo(item)">
+                            <img src="{{ getTypeAlert(item.type).img }}" style="height: 4vh; width: 4vh;" alt="">
+                          </span>
+
+                          <div class="timeline-content">
+                            <div class=" d-flex justify-content-between pt-1">
+                              <div>
+                                <span class=" text-muted text-sm font-weight-bold">
+                                  {{ item.access.name }}
+                                </span>
+                              </div>
+            
+                              <div class="text-right">
+                                <small class="text-muted">
+                                  <i class="fas fa-clock mr-1"> </i> 
+                                  {{ item.date | date:'HH:mm' }}
+                                </small>
+                              </div>
+                            </div>
+            
+                            <p class=" text-sm mt-1 mb-0">
+                              <strong>{{ item.user.name }}</strong><br>
+                              <small>{{ getTypeAlert(item.type).type }}</small>
+                            </p>
+                          </div>
+                        </div>
+            
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div> -->
+        </div>
+
+        <audio #audioPlayer>
+          <source src="assets/notification.mp3" type="audio/mp3">
+          Tu navegador no soporta la reproducción de audio.
+        </audio>
+    </div>
+</div>
+
+<!-- <caption>
+  <button id="addBtn" class="btn btn-icon btn-round btn-twitter">
+      <i  class="fa fa-chevron-up"></i>
+  </button>
+</caption> -->
