@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>SHADOW SISB</title>
+    <title>RUMI SEGURO</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -85,10 +85,10 @@
 <script src="assets/js/demo.js"></script>
 
 <script type="text/javascript">
-    $().ready(function() {
+    $().ready(function () {
         lbd.checkFullPageBackgroundImage();
 
-        setTimeout(function() {
+        setTimeout(function () {
             // after 1000 ms we add the class animated to the login/register card
             $('.card').removeClass('card-hidden');
         }, 700)
@@ -96,80 +96,80 @@
 </script>
 
 <script>
-    function soloNumeros(e){
-		var key = window.Event ? e.which : e.keyCode;
-		if ((key >= 48 && key <= 57) || (key==13)){
-			return true;
-		}else{
-			swal("Error", "Ingresar solo números", "error");
-			e.preventDefault();
-		}
-	}
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode;
+        if ((key >= 48 && key <= 57) || (key == 13)) {
+            return true;
+        } else {
+            swal("Error", "Ingresar solo números", "error");
+            e.preventDefault();
+        }
+    }
 
-	function soloLetras(e){
-		key = e.keyCode || e.which;
-		tecla = String.fromCharCode(key).toLowerCase();
-		letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-		especiales = "8-37-39-46";
+    function soloLetras(e) {
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+        especiales = "8-37-39-46";
 
-		tecla_especial = false
-		for(var i in especiales){
-			if(key == especiales[i]){
-				tecla_especial = true;
-				break;
-			}
-		}
+        tecla_especial = false
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
 
-		if(letras.indexOf(tecla)==-1 && !tecla_especial){
-			swal("Error", "Ingresar solo letras", "error");
-			e.preventDefault();
-		}
-	}
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            swal("Error", "Ingresar solo letras", "error");
+            e.preventDefault();
+        }
+    }
 
-    function sinComillas(e){
+    function sinComillas(e) {
         var key = window.Event ? e.which : e.keyCode;
 
-		if ((key == 39 || key == 34)){
+        if ((key == 39 || key == 34)) {
             swal("Error", "No se puede ingresar comillas en este campo", "error");
-			e.preventDefault();
-        }else{
-			return true;
-		}
-	}
+            e.preventDefault();
+        } else {
+            return true;
+        }
+    }
 
-    function filterFloat(evt,input){
+    function filterFloat(evt, input) {
         // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
-        var key = window.Event ? evt.which : evt.keyCode;    
+        var key = window.Event ? evt.which : evt.keyCode;
         var chark = String.fromCharCode(key);
-        var tempValue = input.value+chark;
-        if(key >= 48 && key <= 57){
-            if(filter(tempValue)=== false){
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
                 swal("Error", "Solo se permite 2 decimales", "error");
                 return false;
-            }else{       
+            } else {
                 return true;
             }
-        }else{
-            if(key == 8 || key == 13 || key == 0) {     
-                return true;              
-            }else if(key == 46){
-                    if(filter(tempValue)=== false){
-                        swal("Error", "No se puede iniciar con un punto, y debe tener solo un punto decimal", "error")
-                        return false;
-                    }else{       
-                        return true;
-                    }
-            }else{
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    swal("Error", "No se puede iniciar con un punto, y debe tener solo un punto decimal", "error")
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
                 return false;
             }
         }
     }
 
-    function filter(__val__){
-        var preg = /^([0-9]+\.?[0-9]{0,2})$/; 
-        if(preg.test(__val__) === true){
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,2})$/;
+        if (preg.test(__val__) === true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

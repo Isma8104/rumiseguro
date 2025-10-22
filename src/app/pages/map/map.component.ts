@@ -108,11 +108,11 @@ export class MapComponent implements OnInit {
         if (!textStyle) {
           textStyle = new Text({});
         }
-        
+
         textStyle.setText(marker.get('name'));
-        textStyle.setFont(10 + 'px sans-serif'); 
+        textStyle.setFont(10 + 'px sans-serif');
         style.setText(textStyle);
-  
+
         marker.setStyle(style);
 
         // if (style && style.getText()) {
@@ -123,37 +123,37 @@ export class MapComponent implements OnInit {
     }
   }
 
- listenMqttMessages() {
-  // Conecta el socket primero
-  this.socketService.socketConnect('map-component');
-  
-  // Escucha mensajes MQTT a través de Socket.IO
-  this.socketService.listenForMqttMessages().subscribe((data: any) => {
-    const topic = data.topic;
-    const message = data.message;
-    const topico = topic.split('/')[1];
+  listenMqttMessages() {
+    // Conecta el socket primero
+    this.socketService.socketConnect('map-component');
 
-    if (topic.includes('alarma')) {
-      console.log('ENTRA EN TOPIC ALARMA:', topic, message);
+    // Escucha mensajes MQTT a través de Socket.IO
+    this.socketService.listenForMqttMessages().subscribe((data: any) => {
+      const topic = data.topic;
+      const message = data.message;
+      const topico = topic.split('/')[1];
 
-      if (message.toString().includes('0')) {
-        return;
+      if (topic.includes('alarma')) {
+        console.log('ENTRA EN TOPIC ALARMA:', topic, message);
+
+        if (message.toString().includes('0')) {
+          return;
+        }
+
+        this.manageAlarms(topico, message);
       }
-      
-      this.manageAlarms(topico, message);
-    }
 
-    console.log('MENSAJE MQTT RECIBIDO:', topic, message);
+      console.log('MENSAJE MQTT RECIBIDO:', topic, message);
 
-    const central = this.neighborhoods.find((item: any) => item.identifier === topico);
-    const alert = message.toString().substring(0, 1);
-    const status = message.toString().substring(1, message.toString().length);
-    
-    if (central) {
-      this.typesAlert(central, alert, status);
-    }
-  });
-}
+      const central = this.neighborhoods.find((item: any) => item.identifier === topico);
+      const alert = message.toString().substring(0, 1);
+      const status = message.toString().substring(1, message.toString().length);
+
+      if (central) {
+        this.typesAlert(central, alert, status);
+      }
+    });
+  }
 
   manageAlarms(topic: string, message: Buffer) {
     if (!this.topicMessageCount[topic]) {
@@ -269,28 +269,28 @@ export class MapComponent implements OnInit {
     this.map.getView().setZoom(zoom);
   }
 
- clearMapState() {
-  this.markers = {};
-  this.topicMessageCount = {};
-  
-  // Ya no necesitas desuscribirte de temas MQTT directamente
-  // porque eso lo maneja el backend
-  
-  // Remover todas las capas del mapa
-  for (const layerId in this.layerRegistry) {
-    if (this.layerRegistry.hasOwnProperty(layerId)) {
-      this.map.removeLayer(this.layerRegistry[layerId]);
+  clearMapState() {
+    this.markers = {};
+    this.topicMessageCount = {};
+
+    // Ya no necesitas desuscribirte de temas MQTT directamente
+    // porque eso lo maneja el backend
+
+    // Remover todas las capas del mapa
+    for (const layerId in this.layerRegistry) {
+      if (this.layerRegistry.hasOwnProperty(layerId)) {
+        this.map.removeLayer(this.layerRegistry[layerId]);
+      }
+    }
+
+    this.layerRegistry = {};
+    this.neighborhoods = [];
+
+    if (this.singleClickListener) {
+      unByKey(this.singleClickListener);
+      this.singleClickListener = null;
     }
   }
-
-  this.layerRegistry = {};
-  this.neighborhoods = [];
-
-  if (this.singleClickListener) {
-    unByKey(this.singleClickListener);
-    this.singleClickListener = null;
-  }
-}
 
   setMarker(incomingMarker: any, neighborhood: any) {
     if (!incomingMarker) {
@@ -335,9 +335,9 @@ export class MapComponent implements OnInit {
     if (!textStyle) {
       textStyle = new Text({});
     }
-    
+
     textStyle.setText(marker.get('name'));
-    textStyle.setFont(10 + 'px sans-serif'); 
+    textStyle.setFont(10 + 'px sans-serif');
     this.markerStyle.setText(textStyle);
 
     // const zoomLevel = this.map.getView().getZoom();
@@ -349,62 +349,62 @@ export class MapComponent implements OnInit {
   }
 
 
-getNeighborhoodByTeam(teamSelected: string) {
-  this.clearMapState();
-  this._api.getNeighborhoodByTeam(
-    teamSelected,
-    this.pagination.page,
-    this.pagination.itemsPage,
-    this.wordToSearch,
-  ).subscribe(resp => {
-    this.neighborhoods = resp.body['neighborhoods'];
-    this.centerMap();
+  getNeighborhoodByTeam(teamSelected: string) {
+    this.clearMapState();
+    this._api.getNeighborhoodByTeam(
+      teamSelected,
+      this.pagination.page,
+      this.pagination.itemsPage,
+      this.wordToSearch,
+    ).subscribe(resp => {
+      this.neighborhoods = resp.body['neighborhoods'];
+      this.centerMap();
 
-    this.neighborhoods.forEach((neighborhood) => {
-      // En lugar de suscribirte directamente a MQTT, envía una petición al backend
-      // para que él se suscriba y te reenvíe los mensajes via Socket.IO
-      console.log('Monitoring neighborhood:', neighborhood.identifier);
-      
-      this.setMarker(this.markers[neighborhood.identifier], neighborhood);
-      const vectorSource = new VectorSource({
-        features: [this.markers[neighborhood.identifier]]
+      this.neighborhoods.forEach((neighborhood) => {
+        // En lugar de suscribirte directamente a MQTT, envía una petición al backend
+        // para que él se suscriba y te reenvíe los mensajes via Socket.IO
+        console.log('Monitoring neighborhood:', neighborhood.identifier);
+
+        this.setMarker(this.markers[neighborhood.identifier], neighborhood);
+        const vectorSource = new VectorSource({
+          features: [this.markers[neighborhood.identifier]]
+        });
+        const vectorLayer = new VectorLayer({
+          source: vectorSource
+        });
+        vectorLayer.set('layerId', neighborhood._id);
+
+        this.layerRegistry[neighborhood._id] = vectorLayer;
+        this.map.addLayer(vectorLayer);
       });
-      const vectorLayer = new VectorLayer({
-        source: vectorSource
+
+      // ---> INICIO: CÓDIGO AÑADIDO PARA INTEGRAR ACTIONSCOMPONENT <---
+      // 🗺️ Primero, nos aseguramos de limpiar cualquier listener anterior para evitar duplicados.
+      if (this.singleClickListener) {
+        unByKey(this.singleClickListener);
+      }
+
+      // Creamos el nuevo listener para el evento 'singleclick'
+      this.singleClickListener = this.map.on('singleclick', (evt: any) => {
+        this.map.forEachFeatureAtPixel(evt.pixel, (feature: any, _: any) => {
+          // Si se hizo clic sobre un marcador (feature)
+          if (feature) {
+            const name = feature.get('name');
+            const connected = feature.get('connected');
+            const identifier = feature.get('identifier');
+
+            // Abrimos el diálogo del ActionsComponent con los datos del marcador
+            this.dialog.open(ActionsComponent, {
+              width: '60%',
+              data: { name, connected, identifier }
+            });
+          }
+        });
       });
-      vectorLayer.set('layerId', neighborhood._id);
-      
-      this.layerRegistry[neighborhood._id] = vectorLayer;
-      this.map.addLayer(vectorLayer);
-    });
+      // ---> FIN: CÓDIGO AÑADIDO <---
 
-    // ---> INICIO: CÓDIGO AÑADIDO PARA INTEGRAR ACTIONSCOMPONENT <---
-    // 🗺️ Primero, nos aseguramos de limpiar cualquier listener anterior para evitar duplicados.
-    if (this.singleClickListener) {
-      unByKey(this.singleClickListener);
-    }
-
-    // Creamos el nuevo listener para el evento 'singleclick'
-    this.singleClickListener = this.map.on('singleclick', (evt: any) => {
-      this.map.forEachFeatureAtPixel(evt.pixel, (feature: any, _: any) => {
-        // Si se hizo clic sobre un marcador (feature)
-        if (feature) {
-          const name = feature.get('name');
-          const connected = feature.get('connected');
-          const identifier = feature.get('identifier');
-          
-          // Abrimos el diálogo del ActionsComponent con los datos del marcador
-          this.dialog.open(ActionsComponent, {
-            width: '60%',
-            data: { name, connected, identifier }
-          });
-        }
-      });
-    });
-    // ---> FIN: CÓDIGO AÑADIDO <---
-
-  }); // Cierre de la suscripción de _api.getNeighborhoodByTeam
-}
+    }); // Cierre de la suscripción de _api.getNeighborhoodByTeam
+  }
 
   calculateZoomForPoints(points) {
     if (points.length === 0) {
@@ -527,7 +527,7 @@ getNeighborhoodByTeam(teamSelected: string) {
   getTypeAlert(alert) {
     let notificationMessage;
     let imgAlert;
-    let imgDefault = 'assets/img/icons/shadow.png';
+    let imgDefault = 'assets/img/icons/rumi_black.png';
 
     switch (alert) {
       case 'ALERT_1':
