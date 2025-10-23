@@ -117,12 +117,12 @@ export class ApiService {
   }
 
   getCentralInformation(type, identifier) {
-    const url = `https://cronosoft.net/box-stats/${type}/${identifier}`;
+    const url = `https://api.rumiseguro.com/box-stats/${type}/${identifier}`;
     return this._http.get(url);
   }
 
   getCentralInformationLast(type, identifier) {
-    const url = `https://cronosoft.net/box-stats/${type}/${identifier}?last=true`;
+    const url = `https://api.rumiseguro.com/box-stats/${type}/${identifier}?last=true`;
     return this._http.get(url);
   }
 
@@ -207,8 +207,9 @@ export class ApiService {
 
 
   getAlertsByTeam(team: string) {
-    const url = URL_SERVICES + `/getAlertsByTeam/${team}`;
 
+    const url = URL_SERVICES + `/getAlertsByTeam/${team}`;
+    console.log("URL Service", url);
     return this._http.get(url, { headers: this.buildHeadersWithToken(), observe: 'response' });
   }
 
@@ -258,7 +259,7 @@ export class ApiService {
     return this._http.get(url, { headers: this.buildHeadersWithToken(), observe: 'response' });
   }
 
-  getAddressFromCoords(lat: number, lng: number){
+  getAddressFromCoords(lat: number, lng: number) {
     const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
 
     return this._http.get(url);
